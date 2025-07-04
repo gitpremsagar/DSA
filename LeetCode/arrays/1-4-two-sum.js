@@ -32,47 +32,23 @@
 // Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 
 
-//O (n^2) solution - not ideal
 /**
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    //nums = [2,7,11,15]
-    //target = 9
-    let requiredIndexes;
+    const seenNumbers = new Map();
+
     for(i=0;i<nums.length;i++){
-        for(j=0;j<nums.length;j++){
-            if(i != j){
-                const sum = nums[i] + nums[j];
-                if(sum == target){
-                    requiredIndexes = [i,j]
-                }
-            } 
+        const currentItem = nums[i];
+        const currentComplement = target - currentItem;
+        if(seenNumbers.has(currentComplement)){
+            return [i,seenNumbers.get(currentComplement)]
+        } else {
+            seenNumbers.set(currentItem,i);
         }
     }
-
-    return requiredIndexes;
 };
 
-
-
- function twoSum(nums, target) {
-     let left = 0;
-     let right = nums.length - 1;
-
-     while (left < right) {
-         const currentSum = nums[left] + nums[right];
-
-         if (currentSum === target) {
-             return [left, right];
-         } else if (currentSum < target) {
-             left++;
-         } else {
-             right--;
-         }
-     }
-
-     throw new Error("No two elements can add up to the target value");
- }
+console.log(twoSum([2,7,11,15],9));
